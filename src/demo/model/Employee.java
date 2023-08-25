@@ -15,8 +15,8 @@ public class Employee extends EntityBaseWithPermission  {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @JoinColumn(name = "id_company", nullable = false)
     @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_company", nullable = false)
     private Company company;
 
     public String getName() {

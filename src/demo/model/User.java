@@ -8,7 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user")
+@Table(name = "'user'")
 public class User  extends EntityBaseWithAccount {
 
     @Column(name = "name", nullable = false)

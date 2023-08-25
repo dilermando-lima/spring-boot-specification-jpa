@@ -8,6 +8,7 @@ public enum UserProfile {
     READER("R")
     ;
     
+
     private final String profile;
 
     private UserProfile(String profile) {

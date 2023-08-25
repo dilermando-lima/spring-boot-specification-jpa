@@ -1,29 +1,29 @@
 package demo.model;
 
+import demo.base.EntityBaseWithId;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "permission")
-public class Permission {
+public class Permission  extends EntityBaseWithId {
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", nullable = false)
     private User user;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_group_permission")
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_group_permission", nullable = false)
     private GroupPermission groupPermission;
 
-    @Column(name = "read")
+    @Column(name = "read", nullable = false)
     private Boolean read;
 
-    @Column(name = "update")
-
+    @Column(name = "update", nullable = false)
     private Boolean update;
 
 	public User getUser() {

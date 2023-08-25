@@ -10,7 +10,7 @@ import jakarta.persistence.OneToOne;
 public abstract class EntityBaseWithPermission extends EntityBaseWithAccount {
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_group_permission", nullable = false, updatable = false)
+    @JoinColumn(name = "id_group_permission", nullable = false)
     private GroupPermission groupPermission;
 
 	public GroupPermission getGroupPermission() {
