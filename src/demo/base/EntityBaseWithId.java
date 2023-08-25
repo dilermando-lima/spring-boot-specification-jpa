@@ -30,6 +30,12 @@ public abstract class EntityBaseWithId {
         dateLastUpdate = ZonedDateTime.now();
     }
 
+	public static <T> T newWithId(String id, Class<T> type){
+		var entityBaseWithId = new EntityBaseWithId() {};
+		entityBaseWithId.setId(id);
+		return type.cast(entityBaseWithId);
+	}
+
     @PreUpdate
     public void preUpdate(){
         dateLastUpdate = ZonedDateTime.now();
