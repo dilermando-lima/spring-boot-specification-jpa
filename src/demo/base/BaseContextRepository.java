@@ -18,7 +18,7 @@ import demo.model.Account;
 public interface BaseContextRepository<E extends EntityBaseWithAccount> extends JpaSpecificationExecutor<E>, CrudRepository<E, String> {
 
     public static final Specification<EntityBaseWithAccount> INCLUDE_ACCOUNT_TO_SPECIFICATION = 
-        (r, q, c) -> c.equal(r.get("account").get("id"), ContextAccount.account());
+        (r, q, c) -> c.equal(r.get("account").get("id"), ContextAccount.accountId());
 
     public static final Function<String, Specification<EntityBaseWithAccount>> INCLUDE_ACCOUNT_AND_ID_TO_SPECIFICATION = 
         id -> INCLUDE_ACCOUNT_TO_SPECIFICATION.and((r, q, c) -> c.equal(r.get("id"), id));
@@ -48,7 +48,7 @@ public interface BaseContextRepository<E extends EntityBaseWithAccount> extends 
     }
 
     public default E saveOnContext(E entity) {
-        entity.setAccount(EntityBaseWithId.newWithId(ContextAccount.account(), Account.class));
+        entity.setAccount(EntityBaseWithId.newWithId(ContextAccount.accountId(), Account.class));
         return save(entity);
     }
 

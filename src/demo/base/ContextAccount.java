@@ -2,19 +2,19 @@ package demo.base;
 
 public class ContextAccount {
 
-    private static final ThreadLocal<String> CURRENT_ACCOUNT = new ThreadLocal<>();
+    private static final ThreadLocal<String> CURRENT_ACCOUNT_ID = new ThreadLocal<>();
 
     private ContextAccount(){}
 
-    public static String account() {
-        return CURRENT_ACCOUNT.get();
+    public static String accountId() {
+        return CURRENT_ACCOUNT_ID.get();
     }
 
-    public static void account(String account) {
-        CURRENT_ACCOUNT.set(account);
+    public static void accountId(String account) {
+        CURRENT_ACCOUNT_ID.set(account);
     }
 
     public static void clear() {
-        CURRENT_ACCOUNT.remove();
+        CURRENT_ACCOUNT_ID.remove();
     }
 }
