@@ -48,7 +48,7 @@ public interface BaseContextRepository<E extends EntityBaseWithAccount> extends 
     }
 
     public default E saveOnContext(E entity) {
-        entity.setAccount(EntityBaseWithId.newWithId(ContextAccount.accountId(), Account.class));
+        entity.setAccount(new Account(ContextAccount.accountId()));
         return save(entity);
     }
 

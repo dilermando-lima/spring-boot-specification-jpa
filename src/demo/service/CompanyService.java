@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import demo.config.ExceptionRest;
 import demo.model.Company;
 import demo.repository.CompanyRepository;
 
@@ -48,10 +49,12 @@ public class CompanyService {
 
     @Transactional
     public void remove(String id){
+        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsById(id));
         companyRepository.deleteByIdOnContext(id);
     }
 
     public FindByIdResponseDTO findById(String id){
+        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsById(id));
         var company = companyRepository.findByIdOnContext(id);
         return new FindByIdResponseDTO(company.getId(), company.getDateInsert(), company.getName());
     }

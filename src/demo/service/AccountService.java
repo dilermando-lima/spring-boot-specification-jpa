@@ -32,7 +32,9 @@ public class AccountService {
 
     @Transactional
     public void remove(){
-        accountRepository.deleteById(ContextAccount.accountId());
+        var accountId = ContextAccount.accountId();
+        ExceptionRest.throwNotFoundIF("account not found", !accountRepository.existsById(accountId));
+        accountRepository.deleteById(accountId);
     }
 
     public FindByIdResponseDTO findById(){

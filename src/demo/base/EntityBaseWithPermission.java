@@ -11,7 +11,7 @@ public abstract class EntityBaseWithPermission extends EntityBaseWithAccount {
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_group_permission", nullable = false)
-    private GroupPermission groupPermission;
+    protected GroupPermission groupPermission;
 
 	public GroupPermission getGroupPermission() {
 		return groupPermission;

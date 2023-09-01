@@ -12,7 +12,18 @@ public class Account extends EntityBaseWithId {
     @Column(name = "name", nullable = false)
     private String name;
 
-	public String getName() {
+    public Account(){}
+
+    public Account(String id) {
+       this.id = id;
+    }
+
+	public Account(String id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public String getName() {
         return name;
     }
 

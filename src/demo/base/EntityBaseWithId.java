@@ -16,25 +16,19 @@ public abstract class EntityBaseWithId {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    protected String id;
 
     @Column(name = "date_insert", nullable = false, updatable = false)
-    private ZonedDateTime dateInsert;
+    protected ZonedDateTime dateInsert;
 
     @Column(name = "date_last_update", nullable = false)
-    private ZonedDateTime dateLastUpdate;
+    protected ZonedDateTime dateLastUpdate;
 
     @PrePersist
     public void prePersist(){
         dateInsert = ZonedDateTime.now();
         dateLastUpdate = ZonedDateTime.now();
     }
-
-	public static <T> T newWithId(String id, Class<T> type){
-		var entityBaseWithId = new EntityBaseWithId() {};
-		entityBaseWithId.setId(id);
-		return type.cast(entityBaseWithId);
-	}
 
     @PreUpdate
     public void preUpdate(){
