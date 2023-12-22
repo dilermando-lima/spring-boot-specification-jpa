@@ -1,6 +1,6 @@
 package demo.model;
 
-import demo.base.EntityBaseWithPermission;
+import demo.base.EntityBaseWithAccount;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -10,7 +10,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "employee")
-public class Employee extends EntityBaseWithPermission  {
+public class Employee  extends EntityBaseWithAccount  {
 
     @Column(name = "name", nullable = false)
     private String name;

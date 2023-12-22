@@ -18,6 +18,8 @@ public class App {
                 "--spring.datasource.password=password",
                 "--spring.jpa.database-platform=org.hibernate.dialect.H2Dialect",
                 "--spring.h2.console.enabled=true",
+                "--spring.jpa.show-sql=true",
+                "--spring.jpa.properties.hibernate.format_sql=true",
                 // handle 404 mapping response
                 "--spring.mvc.throw-exception-if-no-handler-found=true",
                 "--spring.web.resources.add-mappings=false",
@@ -27,6 +29,6 @@ public class App {
         };
 
         SpringApplication.run(App.class, newArgs);
-    }
+     }
 
 }

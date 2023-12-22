@@ -23,6 +23,7 @@ public abstract class EntityBaseWithId {
 
     @Column(name = "date_last_update", nullable = false)
     protected ZonedDateTime dateLastUpdate;
+	
 
     @PrePersist
     public void prePersist(){

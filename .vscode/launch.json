@@ -6,7 +6,7 @@
             "request": "launch",
             "console": "internalConsole",
             "mainClass": "demo.App",
-            "projectName": "demo-specification-jpa"
+            "projectName": "spring-boot-specification-jpa"
         }
     ]
 

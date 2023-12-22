@@ -56,7 +56,7 @@ public class ExceptionRest {
     }
 
     @NonNull
-    public static <T> T throwBadRequestIFNull(String msg, T object) {
+    public static <T> T getOrThrowBadRequestIFNull(String msg, T object) {
         throwBadRequestIF(null, msg, object == null);
         return object;
     }
@@ -70,6 +70,12 @@ public class ExceptionRest {
         throwForbiddenIF(null, msg, condition);
     }
 
+    @NonNull
+    public static <T> T getOrThrowForbiddenIFNull(String msg, T object) {
+        throwForbiddenIF(null, msg, object == null);
+        return object;
+    }
+
     public static void throwNotFoundIF(org.slf4j.Logger logger, String msg, boolean condition) {
         if (condition)
             throwAnyIF(logger, HttpStatus.NOT_FOUND, msg);
@@ -80,7 +86,7 @@ public class ExceptionRest {
     }
 
     @NonNull
-    public static <T> T throwNotFoundIFNull(String msg, T object) {
+    public static <T> T getOrThrowNotFoundIFNull(String msg, T object) {
         throwNotFoundIF(null, msg, object == null);
         return object;
     }
@@ -108,8 +114,10 @@ public class ExceptionRest {
             throwAnyIF(logger, throwable, HttpStatus.INTERNAL_SERVER_ERROR, msg);
     }
 
-    public static void internalServerIF(Throwable throwable, String msg, boolean condition) {
-        throwInternalServerIF(null, throwable, msg, condition);
+    @NonNull
+    public static <T> T getOrThrowInternalServerIFNull(String msg, T object) {
+        throwInternalServerIF(null, msg, object == null);
+        return object;
     }
 
     public static class ApiException extends RuntimeException {

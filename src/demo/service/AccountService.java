@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import demo.base.ContextAccount;
 import demo.config.ExceptionRest;
+import demo.config.SessionRequest;
 import demo.model.Account;
 import demo.repository.AccountRepository;
 
@@ -17,6 +17,9 @@ public class AccountService {
 
     @Autowired
     AccountRepository accountRepository;
+
+    @Autowired
+    SessionRequest sessionRequest;
 
     public record CreateRequestDTO(String name) {}
     public record CreateResponseDTO(String id, ZonedDateTime dateInsert, String name) {}
@@ -32,17 +35,17 @@ public class AccountService {
 
     @Transactional
     public void remove(){
-        var accountId = ContextAccount.accountId();
+        var accountId = sessionRequest.getAccountId();
         ExceptionRest.throwNotFoundIF("account not found", !accountRepository.existsById(accountId));
         accountRepository.deleteById(accountId);
     }
 
     public FindByIdResponseDTO findById(){
         var account = accountRepository
-                        .findById(ContextAccount.accountId())
+                        .findById(sessionRequest.getAccountId())
                         .orElse(null);
                         
-        account = ExceptionRest.throwNotFoundIFNull("account not found", account);
+        account = ExceptionRest.getOrThrowNotFoundIFNull("account not found", account);
 
         return new FindByIdResponseDTO(account.getId(), account.getDateInsert(), account.getName());
     }

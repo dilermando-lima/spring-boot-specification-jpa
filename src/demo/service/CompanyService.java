@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import demo.config.ExceptionRest;
+import demo.config.SessionRequest;
 import demo.model.Company;
 import demo.repository.CompanyRepository;
 
@@ -16,6 +17,9 @@ public class CompanyService {
 
     @Autowired
     CompanyRepository companyRepository;
+
+    @Autowired
+    SessionRequest sessionRequest;
 
     public record CreateRequestDTO(String name) {}
     public record CreateResponseDTO(String id, ZonedDateTime dateInsert, String name) {}
@@ -27,7 +31,7 @@ public class CompanyService {
     public CreateResponseDTO create(CreateRequestDTO request) {
         var company = new Company();
         company.setName(request.name());
-        company = companyRepository.saveOnContext(company);
+        company = companyRepository.save(company);
         return new CreateResponseDTO(company.getId(), company.getDateInsert(), company.getName());
     }
 
@@ -36,12 +40,15 @@ public class CompanyService {
         var company = new Company();
         company.setName(request.name());
         company.setId(id);
-        companyRepository.saveOnContext(company);
+        companyRepository.save(company);
     }
 
     public List<ListItemResponseDTO> list() {
+
+        companyRepository.count();
+
         return companyRepository
-                .listOnContext()
+                .listOnAccountContext(null, sessionRequest.getAccountId())
                 .stream()
                 .map(c -> new ListItemResponseDTO(c.getId(), c.getDateInsert(), c.getAccount().getName()))
                 .toList();
@@ -49,13 +56,13 @@ public class CompanyService {
 
     @Transactional
     public void remove(String id){
-        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsById(id));
-        companyRepository.deleteByIdOnContext(id);
+        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsByIdOnAccountContext(id, sessionRequest.getAccountId()));
+        companyRepository.deleteByIdOnAccountContext(id, sessionRequest.getAccountId());
     }
 
     public FindByIdResponseDTO findById(String id){
-        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsById(id));
-        var company = companyRepository.findByIdOnContext(id);
+        ExceptionRest.throwNotFoundIF("company not found", id == null || id.trim().isBlank() || !companyRepository.existsByIdOnAccountContext(id, sessionRequest.getAccountId()));
+        var company = companyRepository.findByIdOnAccountContext(id, sessionRequest.getAccountId());
         return new FindByIdResponseDTO(company.getId(), company.getDateInsert(), company.getName());
     }
 }

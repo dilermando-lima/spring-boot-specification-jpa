@@ -2,9 +2,9 @@ package demo.repository;
 
 import org.springframework.stereotype.Repository;
 
-import demo.base.BaseContextRepository;
+import demo.base.ContextAccountRepository;
 import demo.model.Employee;
 
 @Repository
-public interface EmployeeRepository extends BaseContextRepository<Employee> {
+public interface EmployeeRepository extends ContextAccountRepository<Employee> {
 }

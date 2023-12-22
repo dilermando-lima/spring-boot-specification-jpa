@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import demo.config.FilterInterceptor.PublicEndpoint;
+import demo.config.FilterInterceptor.RequiresProfile;
+import demo.model.UserProfile;
 import demo.service.AccountService;
 import demo.service.AccountService.CreateRequestDTO;
 import demo.service.AccountService.CreateResponseDTO;
@@ -28,11 +30,13 @@ public class AccountController {
         return accountService.create(request);
     }
 
+    @RequiresProfile(UserProfile.READER)
     @GetMapping
     public FindByIdResponseDTO findById(){
         return accountService.findById();
     }
 
+    @RequiresProfile(UserProfile.ADMINISTRATOR)
     @DeleteMapping
     public ResponseEntity<Void> remove(){
         accountService.remove();
